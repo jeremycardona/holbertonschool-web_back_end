@@ -1,35 +1,49 @@
 export default class HolbertonCourse {
   constructor(name, length, students) {
+    // Verify attribute types during obj creation
+    if (Object.getPrototypeOf(name) !== String.prototype) throw TypeError('name must be a string');
+    if (Object.getPrototypeOf(length) !== Number.prototype) throw TypeError('length must be a number');
+    if (Object.getPrototypeOf(students) !== Array.prototype) throw TypeError('students must be an array of strings');
+    students.forEach((student) => {
+      if (Object.getPrototypeOf(student) !== String.prototype) throw TypeError('students must be an array of strings');
+    });
+
+    // Create objs
     this._name = name;
     this._length = length;
     this._students = students;
   }
 
+  // Setters
+  set name(value) {
+    if (Object.getPrototypeOf(value) !== String.prototype) throw TypeError('name must be a string');
+    this._name = value;
+  }
+
+  set length(value) {
+    if (Object.getPrototypeOf(value) !== Number.prototype) throw TypeError('length must be a number');
+    this._length = value;
+  }
+
+  set students(value) {
+    if (Object.getPrototypeOf(value) !== Array.prototype) throw TypeError('students must be an array');
+    value.forEach((student) => {
+      if (Object.getPrototypeOf(student) !== String.prototype) throw TypeError('students must be an array of strings');
+    });
+    this._students = value;
+  }
+
+  // Getters
+
   get name() {
     return this._name;
   }
 
-  set name(value) {
-    this._name = value;
-  }
-
-  // Getter for length
   get length() {
     return this._length;
   }
 
-  // Setter for length
-  set length(value) {
-    this._length = value;
-  }
-
-  // Getter for students
   get students() {
     return this._students;
-  }
-
-  // Setter for students
-  set students(value) {
-    this._students = value;
   }
 }
