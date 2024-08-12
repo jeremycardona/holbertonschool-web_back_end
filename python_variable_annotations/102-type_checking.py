@@ -1,25 +1,19 @@
 #!/usr/bin/env python3
 """type checking with mypy"""
-from typing import Tuple, Generator
+from typing import Tuple, List
 
 
-def zoom_array(lst: Tuple[int, ...], factor: int = 2) -> Tuple[int, ...]:
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
     """Zoom array"""
-    if not isinstance(factor, int):
-        raise TypeError("factor must be an int")
-
-    zoomed_in: Generator[int, None, None] = (
+    zoomed_in: List = [
         item for item in lst
-        for _ in range(factor)
-    )
-
-    return tuple(zoomed_in)
+        for i in range(factor)
+    ]
+    return zoomed_in
 
 
 array = (12, 72, 91)
 
-
 zoom_2x = zoom_array(array)
 
-# Correct the factor to be an integer
 zoom_3x = zoom_array(array, 3)
