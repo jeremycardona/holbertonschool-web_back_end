@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Element length function"""
 from typing import List, Tuple, Iterable, Sequence
 
 
