@@ -29,32 +29,23 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """Get a page of the dataset."""
-        assert isinstance(page, int) and page > 0
-        assert isinstance(page_size, int) and page_size > 0
+        """get page"""
+        self.dataset()
+        for i in [page, page_size]:
+            assert isinstance(i, int) and page > 0
+        assert page_size > 0
+        range_i = index_range(page, page_size)
+        return self.__dataset[range_i[0]:range_i[1]]
 
-        dataset = self.dataset()
-        start_index, end_index = index_range(page, page_size)
-
-        if start_index >= len(dataset):
-            return []
-
-        return dataset[start_index:end_index]
-
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
-        """Get a page of the dataset with hypermedia pagination details."""
-        data = self.get_page(page, page_size)
-        total_items = len(self.dataset())
-        total_pages = math.ceil(total_items / page_size)
-
-        next_page = page + 1 if page <= total_pages else None
-        prev_page = page - 1 if page > 1 else None
-
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+        """get hypermedia page"""
+        data: int = self.get_page(page, page_size)
+        total: int = math.ceil(len(self.__dataset) / page_size)
         return {
-            "page_size": len(data),
-            "page": page,
-            "data": data,
-            "next_page": next_page,
-            "prev_page": prev_page,
-            "total_pages": total_pages
+            'page_size': len(data),
+            'page': page,
+            'data': data,
+            'next_page': page + 1 if (page + 1) <= totalPages else None,
+            'prev_page': page - 1 if (page - 1) > 0 else None,
+            'total_pages': total
         }
