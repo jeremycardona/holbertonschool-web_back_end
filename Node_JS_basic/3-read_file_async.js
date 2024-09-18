@@ -2,24 +2,18 @@ const fs = require('fs');
 
 function countStudents(path) {
   return new Promise((resolve, reject) => {
-    
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        
         reject(new Error('Cannot load the database'));
       } else {
-        
         const lines = data.split('\n').filter((line) => line.trim() !== '');
 
-        
         if (lines.length < 2) {
           reject(new Error('Cannot load the database'));
         }
 
-        
         const students = lines.slice(1);
 
-        
         const totalStudents = students.length;
         const fields = {};
 
@@ -32,7 +26,6 @@ function countStudents(path) {
           fields[field].push(firstname);
         });
 
-        
         let response = `Number of students: ${totalStudents}\n`;
 
         for (const field in fields) {
@@ -42,7 +35,6 @@ function countStudents(path) {
           }
         }
 
-        
         resolve(response.trim());
       }
     });
